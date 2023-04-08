@@ -124,7 +124,7 @@ SOURCE: https://learn.microsoft.com/en-us/lifecycle/faq/internet-explorer-micros
 
 Since this is at the time of writing April, 2023, it would be good to simply uninstall this application. 
 
-Another thing we can do is update our other indivual applications installed onto this system.   
+Another thing we can do is update our other individual applications installed onto this system.   
 
 So lets remediate this and run another scan.
 
