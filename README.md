@@ -74,3 +74,12 @@ This really helps us see the many different things we can find when running a vu
 
 ![dotnet](https://user-images.githubusercontent.com/82400181/230707520-29638cb3-acd3-4bb9-aefb-853779cecda5.png)
 
+
+#### Remediations
+
+Nessus will recommend ways to remediate these issues and most of it pertains to updating our system
+
+![remediation](https://user-images.githubusercontent.com/82400181/230707776-374d6c96-4ad2-4df2-a6bc-a44c9de79b33.png)
+
+This will also help us see other programs such as our web browser and if it being unpatched is a vulnerability.
+
