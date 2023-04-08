@@ -63,7 +63,7 @@ If you encounter any issues ensure printer sharing and discovery is turned on in
 
 ### 3. Credential setup
 
-We go back to our original scan and folow the sequence to reach the menu needed as shown below.
+We go back to our original scan and follow the sequence to reach the menu needed as shown below.
 
 ![cred](https://user-images.githubusercontent.com/82400181/230707263-328bcc1b-d9ca-4a9e-88ae-efb34dda8077.png)  
 
