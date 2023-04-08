@@ -1,5 +1,5 @@
-# NessusScanner
-This repo focuses on a hands on lab with Nessus. This is a summary of running the scan on a Windows 10 Virtual Machine.
+# Nessus Scanner
+This repo focuses on a hands on lab with Nessus and covers several features. This is a summary of running the scan on a Windows 10 Virtual Machine as the target machine.
 
 
 # Setup
