@@ -1,0 +1,270 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Nessus Scanner</title>
+    <style>
+      body {
+        font-family: Arial, sans-serif;
+        line-height: 1.6;
+      }
+      img {
+        max-width: 100%;
+        height: auto;
+      }
+    </style>
+  </head>
+  <body>
+    <h1>Nessus Scanner</h1>
+    <p>
+      This repo focuses on a hands-on lab with Nessus and covers several
+      features. This is a summary of running the scan on a Windows 10 Virtual
+      Machine as the target machine. I will walk you through this lab and show
+      you a basic process to eliminate some commonly known vulnerabilities.
+    </p>
+  </body>
+</html>
+<h2>Setup</h2>
+<ol>
+  <li>
+    <p>
+      Download and install VMware Player on your computer or set up another
+      hypervisor such as Hyper-V.
+    </p>
+    <a href="https://www.vmware.com/products/workstation-player.html"
+      >https://www.vmware.com/products/workstation-player.html</a
+    >
+  </li>
+  <li>
+    <p>Download the Windows 10 ISO file and save it to your computer.</p>
+    <a href="https://www.microsoft.com/en-us/software-download/windows10"
+      >https://www.microsoft.com/en-us/software-download/windows10</a
+    >
+    <p>You'll have to walk through the installer and select the ISO option.</p>
+  </li>
+  <li>
+    <p>Download and install Nessus Essentials.</p>
+    <a href="https://www.tenable.com/products/nessus/nessus-essentials"
+      >https://www.tenable.com/products/nessus/nessus-essentials</a
+    >
+    <p>
+      This will be our vulnerability scanner that will be used to conduct scans
+      against the virtual machine.
+    </p>
+  </li>
+  <li>
+    <p>
+      Create a new virtual machine in VMware Player and install Windows 10 on
+      it.
+    </p>
+    <p>
+      Ensure you configure it for bridged mode to allow it to be inside your
+      local network for easy communication.
+    </p>
+    <p>
+      Afterwards, test the connection by finding your IP address with the
+      ipconfig command and pinging it from your host terminal.
+    </p>
+  </li>
+</ol>
+
+<h2>First Scan</h2>
+<p>
+  With our Nessus account setup and our VM configured, we run the initial
+  non-credentialed basic scan on our target machine via its IP
+</p>
+<p>Creation button is shown below</p>
+<img
+  src="https://user-images.githubusercontent.com/82400181/230707337-d5690cb9-d261-4a6b-b9d0-d63d40be853a.png"
+  alt="new scan"
+/>
+<p>Select basic scan and enter the target's IP address</p>
+<img
+  src="https://user-images.githubusercontent.com/82400181/230742721-d68f0c4d-ea51-4c19-97de-6fa400eae965.png"
+  alt="basic scan"
+/>
+<p>After that ensure to run and now we wait.</p>
+<img
+  src="https://user-images.githubusercontent.com/82400181/230706510-62e18475-2072-4fe1-b5ff-7e88aa88c21c.png"
+  alt="1st Scan"
+/>
+<p>
+  We found a medium risk, and Nessus provides the explanation as pictured below.
+</p>
+<img
+  src="https://user-images.githubusercontent.com/82400181/230706695-43b1f6d2-da6c-45d6-a522-7d7c99b7835a.png"
+  alt="medium"
+/>
+<p>
+  The scope is a bit narrow here without our credentials, so let's provide them
+  and see what happens.
+</p>
+<h2>Credentialed Scan</h2>
+<p>
+  Let's set up a credentialed network scan, but first, we have a few steps to
+  take.
+</p>
+<h3>1. Enable remote registry</h3>
+<img
+  src="https://user-images.githubusercontent.com/82400181/230707002-c7c65448-8146-423a-a317-917f70491006.png"
+  alt="remote"
+/>
+<p>
+  Ensure it's in the automatic startup type and manually ensure it's running as
+  pictured.
+</p>
+<h3>2. Registry edit</h3>
+<img
+  src="https://user-images.githubusercontent.com/82400181/230707026-1c7951c8-4151-4ab5-8e58-6e928e9b6f06.png"
+  alt="reg"
+/>
+<p>
+  Inside the registry path, we create a new DWORD titled
+  'LocalAccountFilterPolicy' and set the value to 1.
+</p>
+<h4>Note</h4>
+<p>
+  These steps help us follow Nessus recommended settings for our setup as it is
+  not in a domain. If you encounter any issues, ensure printer sharing and
+  discovery is turned on in the VM and temporarily disable User Account Control
+  in the VM for the scan.
+</p>
+<h3>3. Credential setup</h3>
+<p>
+  We go back to our original scan and follow the sequence to reach the menu
+  needed as shown below.
+</p>
+<img
+  src="https://user-images.githubusercontent.com/82400181/230707263-328bcc1b-d9ca-4a9e-88ae-efb34dda8077.png"
+  alt="cred"
+/>
+<p>Simply enter your VM account credentials.</p>
+<img
+  src="https://user-images.githubusercontent.com/82400181/230707264-885ecba8-6e02-4ab2-b73b-1d6811f0a08d.png"
+  alt="cred2"
+/>
+<h3>4. Scan Results</h3>
+<p>
+  We can see many more vulnerabilities with this type of scan, including
+  criticals and highs.
+</p>
+<img
+  src="https://user-images.githubusercontent.com/82400181/230707459-97dd1dfa-c63d-412a-93c5-8efc3bbe7b6e.png"
+  alt="scans"
+/>
+<h4>Example missing updates</h4>
+<p>
+  We can see below that our VM is unpatched, which is a huge concern. This
+  really helps us see the many different things we can find when running a
+  vulnerability scan such as this.
+</p>
+<img
+  src="https://user-images.githubusercontent.com/82400181/230707520-29638cb3-acd3-4bb9-aefb-853779cecda5.png"
+  alt="dotnet"
+/>
+<h4>Critical</h4>
+<p>Here we can see that a critical issue was found during the scan.</p>
+<img
+  src="https://user-images.githubusercontent.com/82400181/230742480-21857b54-85f9-483c-9acd-3eceacbf8e1c.png"
+  alt="critical"
+/>
+<p>We can remediate this with the suggested solution.</p>
+<h4>Remediations</h4>
+<p>
+  Nessus recommends ways to remediate these issues, and most of it here pertains
+  to updating our system.
+</p>
+<img
+  src="https://user-images.githubusercontent.com/82400181/230707776-374d6c96-4ad2-4df2-a6bc-a44c9de79b33.png"
+  alt="remediation"
+/>
+<p>
+  A possible long-term solution here is to ensure we have a continuous delivery
+  and installation of all patches, including third-party software.
+</p>
+<h3>New Scan post Remediation</h3>
+<p>
+  While better, it appears we still have a critical issue and a few highs; let's
+  investigate.
+</p>
+<img
+  src="https://user-images.githubusercontent.com/82400181/230743118-3a9c117a-7f7e-46b8-bddf-bb9d884a500a.png"
+  alt="Untitled"
+/>
+<p>It appears that the issue here stems from Internet Explorer.</p>
+<img
+  src="https://user-images.githubusercontent.com/82400181/230743143-fd5d4105-3f4a-479f-872f-9ba55554e082.png"
+  alt="IE"
+/>
+<p>
+  However, in this situation, we can no longer update this application as per
+  Microsoft.
+</p>
+<p>
+  "As of June 15, 2022, the IE11 desktop application is no longer supported."
+</p>
+<p>
+  "The Internet Explorer 11 (IE11) desktop application will be permanently
+  disabled through a Microsoft Edge update on certain versions of Windows 10 on
+  February 14, 2023."
+</p>
+<p>
+  SOURCE:
+  <a
+    href="https://learn.microsoft.com/en-us/lifecycle/faq/internet-explorer-microsoft-edge"
+    >https://learn.microsoft.com/en-us/lifecycle/faq/internet-explorer-microsoft-edge</a
+  >
+</p>
+<p>
+  Since this is at the time of writing April, 2023, it would be good to simply
+  uninstall this application.
+</p>
+<p>
+  Another thing we can do is update our other individual applications installed
+  onto this system.
+</p>
+<p>So let's remediate this and run another scan.</p>
+<h3>Important note</h3>
+<p>
+  We have to do more than simply uninstall the app to make it disappear from the
+  plugin. Some of the underlying components are still around it seems, but to
+  achieve this, we will follow the steps given by Microsoft's documentation.
+</p>
+<p>
+  So let's open up the group policy, just type 'edit group policy' into the
+  desktop search bar.
+</p>
+<img
+  src="https://user-images.githubusercontent.com/82400181/230744069-8c511fdc-19c7-465c-8262-c35ff6ce612a.png"
+  alt="GPDis"
+/>
+<p>Then we simply select disable IE explorer and enable it.</p>
+<img
+  src="https://user-images.githubusercontent.com/82400181/230744079-66f67b22-6000-44d3-970d-f9cdb1569ba2.png"
+  alt="gp2"
+/>
+<p>
+  SOURCE:
+  <a href="https://learn.microsoft.com/en-us/deployedge/edge-ie-disable-ie11"
+    >https://learn.microsoft.com/en-us/deployedge/edge-ie-disable-ie11</a
+  >
+</p>
+<h4>Additional Note</h4>
+<p>
+  We also want to make sure we open up the Microsoft store and update those apps
+  as well.
+</p>
+<h3>Final Scan</h3>
+<p>Now we run our final credentialed scan on our target system.</p>
+<img
+  src="https://user-images.githubusercontent.com/82400181/230744308-38caa0b1-147e-4911-ba4e-ebab63cf11a6.png"
+  alt="final"
+/>
+<p>It appears we still have one high issue, but we are doing far better.</p>
+<h3>Conclusion</h3>
+<p>This demo will conclude here though.</p>
+<p>
+  Now it's up to you to find what the issue is and use our process to remediate
+  this.
+</p>
