@@ -4,19 +4,18 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Nessus Scanner</title>
-    <style>
-      body {
-        font-family: Arial, sans-serif;
-        line-height: 1.6;
-      }
-      img {
-        max-width: 100%;
-        height: auto;
-      }
-    </style>
+    <link rel="stylesheet" href="styles.css" />
   </head>
-  <body>
-    <h1>Nessus Scanner</h1>
+  <body class="container">
+    <nav>
+      <a class="section" href="#top">Home</a>
+      <a class="section" href="#setup">Setup</a>
+      <a class="section" href="#first-scan">First Scan</a>
+      <a class="section" href="#credentialed-scan">Credentialed Scan</a>
+      <a class="section" href="#final-scan">Final Scan</a>
+      <a class="section" href="#conclusion">Conclusion</a>
+    </nav>
+    <h1 id="top">Nessus Scanner</h1>
     <p>
       This repo focuses on a hands-on lab with Nessus and covers several
       features. This is a summary of running the scan on a Windows 10 Virtual
@@ -25,7 +24,7 @@
     </p>
   </body>
 </html>
-<h2>Setup</h2>
+<h2 id="setup">Setup</h2>
 <ol>
   <li>
     <p>
@@ -69,7 +68,7 @@
   </li>
 </ol>
 
-<h2>First Scan</h2>
+<h2 id="first-scan">First Scan</h2>
 <p>
   With our Nessus account setup and our VM configured, we run the initial
   non-credentialed basic scan on our target machine via its IP
@@ -100,7 +99,7 @@
   The scope is a bit narrow here without our credentials, so let's provide them
   and see what happens.
 </p>
-<h2>Credentialed Scan</h2>
+<h2 id="credentialed-scan">Credentialed Scan</h2>
 <p>
   Let's set up a credentialed network scan, but first, we have a few steps to
   take.
@@ -255,16 +254,19 @@
   We also want to make sure we open up the Microsoft store and update those apps
   as well.
 </p>
-<h3>Final Scan</h3>
+<h2 id="final-scan">Final Scan</h2>
 <p>Now we run our final credentialed scan on our target system.</p>
 <img
   src="https://user-images.githubusercontent.com/82400181/230744308-38caa0b1-147e-4911-ba4e-ebab63cf11a6.png"
   alt="final"
 />
 <p>It appears we still have one high issue, but we are doing far better.</p>
-<h3>Conclusion</h3>
+<h2 id="conclusion">Conclusion</h2>
 <p>This demo will conclude here though.</p>
 <p>
   Now it's up to you to find what the issue is and use our process to remediate
   this.
 </p>
+<footer>
+  <p>&copy; 2023 Nessus Scanner</p>
+</footer>
